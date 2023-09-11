@@ -32,11 +32,16 @@ public class SnakeAndLadder {
                 currentPosition = 0;
             }
 
+            if (currentPosition > winningSpot) {
+                currentPosition -= diceNumber;
+            } else if (currentPosition == winningSpot) {
+                break;
+            }
+
             System.out.println("Current Position: " + currentPosition);
         }
 
-        if (currentPosition == winningSpot)
-        {
+        if (currentPosition == winningSpot) {
             System.out.println("Congratulations! You reached the winning spot!");
         } else {
             System.out.println("Oops! You missed the winning spot.");
