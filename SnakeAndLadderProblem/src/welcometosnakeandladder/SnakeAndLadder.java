@@ -1,81 +1,51 @@
 package welcometosnakeandladder;
 
 public class SnakeAndLadder {
-    static int player1Position = 0;
-    static int player2Position = 0;
-    static final int NO_PLAY = 1;
-    static final int LADDER = 2;
-    static final int SNAKE = 3;
+    public static void main(String[] args) {
+        int currentPosition = 0;
+        int winningSpot = 100;
 
-    static final int WIN_POSITION = 100;
+        System.out.println("Welcome to Snake and Ladder Game!");
 
-    static final int START_POSITION = 0;
+        while (currentPosition < winningSpot) {
+            int diceNumber = rollDice();
 
-    private static int dieRoll() {
+            currentPosition += diceNumber;
+
+            if (currentPosition > winningSpot) {
+                currentPosition -= diceNumber;
+            }
+
+            currentPosition = checkSnakeAndLadder(currentPosition);
+
+            System.out.println("Current Position: " + currentPosition);
+        }
+
+        System.out.println("Congratulations! You reached the winning spot!");
+    }
+
+    public static int rollDice() {
         return (int) (Math.random() * 6) + 1;
     }
 
-    private static int getOption() {
-        return (int) (Math.random() * 3) + 1;
-    }
+    public static int checkSnakeAndLadder(int position) {
+        int[] snakes = {16, 47, 49, 56, 62, 64, 87, 93, 95, 98};
+        int[] ladders = {1, 4, 9, 21, 28, 36, 51, 71, 80};
 
-    public static void main(String[] args) {
-        int diceCount = 0;
-        int playerChance = 0;
-
-        while (player1Position < WIN_POSITION && player2Position < WIN_POSITION) {
-            int dieValue = dieRoll();
-            diceCount++;
-            System.out.println("Die: " + dieValue);
-
-            int option = getOption();
-            System.out.println("Option: " + option);
-
-            if (playerChance % 2 == 0) {
-                switch (option) {
-                    case NO_PLAY:
-                        System.out.println("No Play");
-                        break;
-                    case LADDER:
-                        if (player2Position + dieValue <= WIN_POSITION)
-                            player2Position += dieValue;
-                        break;
-                    case SNAKE:
-                        player2Position -= dieValue;
-                        if (player2Position < START_POSITION)
-                            player2Position = START_POSITION;
-                        break;
-                    default:
-                        System.out.println("Wrong option");
-                }
-
-                System.out.println("Position Player 2: " + player2Position);
-                if (player2Position == WIN_POSITION)
-                    System.out.println("Player 2 won the game!!");
-            } else {
-                switch (option) {
-                    case NO_PLAY:
-                        System.out.println("No Play");
-                        break;
-                    case LADDER:
-                        if (player1Position + dieValue <= WIN_POSITION)
-                            player1Position += dieValue;
-                        break;
-                    case SNAKE:
-                        if (player1Position - dieValue < START_POSITION)
-                            player1Position = START_POSITION;
-                        else
-                            player1Position -= dieValue;
-                        break;
-                    default:
-                        System.out.println("Wrong option");
-                }
-                System.out.println("Position Player 1: " + player1Position);
-                if (player1Position == WIN_POSITION)
-                    System.out.println("Player 1 won the game!!");
+        for (int i = 0; i < snakes.length; i++) {
+            if (position == snakes[i]) {
+                position -= position;
+                break;
             }
-            playerChance++;
         }
-        System.out.println("Dice Count: " + diceCount);
+
+        for (int i = 0; i < ladders.length; i++) {
+            if (position == ladders[i]) {
+                position += position;
+                break;
+            }
+        }
+
+        return position;
     }
 }
