@@ -11,18 +11,28 @@ public class SnakeAndLadder {
             // Roll the die
             int diceNumber = (int) (Math.random() * 6) + 1;
 
-            // Calculate the next position
-            currentPosition += diceNumber;
+            int option = (int) (Math.random() * 3);
 
-            // Check if the current position is beyond the winning spot
-            if (currentPosition > winningSpot) {
-                currentPosition -= diceNumber;
+            switch (option) {
+                case 0:
+                    System.out.println("No Play! Stay in the same position.");
+                    break;
+                case 1:
+                    System.out.println("Ladder! Move ahead by " + diceNumber + " positions.");
+                    currentPosition += diceNumber;
+                    break;
+                case 2:
+                    System.out.println("Snake! Move behind by " + diceNumber + " positions.");
+                    currentPosition -= diceNumber;
+                    break;
             }
 
-            // Check for snake or ladder at the current position
-            currentPosition = checkSnakeAndLadder(currentPosition);
+            if (currentPosition > winningSpot) {
+                currentPosition -= diceNumber;
+            } else if (currentPosition < 0) {
+                currentPosition = 0;
+            }
 
-            // Print the current position
             System.out.println("Current Position: " + currentPosition);
         }
 
@@ -31,31 +41,6 @@ public class SnakeAndLadder {
         } else {
             System.out.println("Oops! You missed the winning spot.");
         }
-    }
-
-    public static int checkSnakeAndLadder(int position) {
-        // Define the positions of snakes and ladders
-        int[] snakes = {16, 47, 49, 56, 62, 64, 87, 93, 95, 98};
-        int[] ladders = {1, 4, 9, 21, 28, 36, 51, 71, 80};
-
-        // Check if the current position is a snake or ladder
-        for (int i = 0; i < snakes.length; i++) {
-            if (position == snakes[i]) {
-                System.out.println("Oops! You encountered a snake at position " + position);
-                position -= position;
-                break;
-            }
-        }
-
-        for (int i = 0; i < ladders.length; i++) {
-            if (position == ladders[i]) {
-                System.out.println("Wow! You climbed a ladder at position " + position);
-                position += position;
-                break;
-            }
-        }
-
-        return position;
     }
 }
 
