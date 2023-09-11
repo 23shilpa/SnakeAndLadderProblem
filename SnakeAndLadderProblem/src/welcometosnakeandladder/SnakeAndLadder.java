@@ -8,7 +8,6 @@ public class SnakeAndLadder {
         System.out.println("Welcome to Snake and Ladder Game!");
 
         while (currentPosition < winningSpot) {
-            // Roll the die
             int diceNumber = (int) (Math.random() * 6) + 1;
 
             int option = (int) (Math.random() * 3);
@@ -36,7 +35,8 @@ public class SnakeAndLadder {
             System.out.println("Current Position: " + currentPosition);
         }
 
-        if (currentPosition == winningSpot) {
+        if (currentPosition == winningSpot)
+        {
             System.out.println("Congratulations! You reached the winning spot!");
         } else {
             System.out.println("Oops! You missed the winning spot.");
